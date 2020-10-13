@@ -15,27 +15,27 @@ const port = 4000;
 
 client.connect(err => {
   const collection = client.db("VolunteerNetwork").collection("VolunteerBd");
- console.log('data base connected');
- 
+  console.log('data base connected');
+const eventsCollection = client.db("VolunteerNetwork").collection("events");
 
 
-app.post("/addOrganizations", (req, res) => {
-        const organizations = req.body;
-        organizationsCollection.insertMany(organizations)
+app.post("/addVolunteerBd", (req, res) => {
+        const VolunteerBd = req.body;
+        collection.insertMany(VolunteerBd)
         .then(result => {
             res.send(result.insertedCount)
         })
     })
 
-    app.get('/organizations', (req, res) => {
-        organizationsCollection.find({})
+    app.get('/VolunteerBd', (req, res) => {
+        collection.find({})
         .toArray((err, documents) => {
             res.send(documents);
         })
     })
 
-    app.get('/organizations/:id', (req, res) => {
-        organizationsCollection.find({id: req.params.id})
+    app.get('/VolunteerBd/:id', (req, res) => {
+        collection.find({id: req.params.id})
         .toArray((err, documents) => {
             res.send(documents[0]);
         })
@@ -73,7 +73,7 @@ app.post("/addOrganizations", (req, res) => {
 
     app.post("/createEvents", (req, res) => {
         const events = req.body;
-        organizationsCollection.insertOne(events)
+        collection.insertOne(events)
             .then(result => {
                 res.send(result.insertedCount)
             })
@@ -94,4 +94,4 @@ app.get('/', (req, res) => {
     res.send('mongodb!')
 })
 
-app.listen(process.env.PORT || port)
+app.listen(4000)
